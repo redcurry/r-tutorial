@@ -182,7 +182,7 @@ a data frame that conforms to `trees`, with a Girth less than `max_girth`.
 
 We can also create a data frame on the fly:
 
-   data <- data.frame(Turbidity=rnorm(10), Concentration=rnorm(10))
+    data <- data.frame(Turbidity=rnorm(10), Concentration=rnorm(10))
 
 Reading data
 ------------
