@@ -180,6 +180,10 @@ a data frame that conforms to `trees`, with a Girth less than `max_girth`.
 
 **Solution.** `vol <- function(x, max_girth) { mean(x[x$Girth < max_girth,]$Volume) }`
 
+We can also create a data frame on the fly:
+
+   data <- data.frame(Turbidity=rnorm(10), Concentration=rnorm(10))
+
 Reading data
 ------------
 
