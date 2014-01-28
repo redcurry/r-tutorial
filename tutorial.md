@@ -256,6 +256,8 @@ To plot the best-fit line:
 numbers from a normal distribution. Run a linear model on the two columns
 and make sure that the slope is not significantly different. Plot the data.
 
+*If there looks like there will be time, teach `for` and `if`.*
+
 Rscript
 -------
 
