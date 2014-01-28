@@ -252,6 +252,10 @@ To plot the best-fit line:
     slope <- coef(lmodel)[2]
     abline(intercept, slope)
 
+**Exercise**. Create a data frame with two columns, each filled with random
+numbers from a normal distribution. Run a linear model on the two columns
+and make sure that the slope is not significantly different. Plot the data.
+
 Rscript
 -------
 
@@ -268,3 +272,55 @@ then call from the command line for each of your data files, perhaps as a loop.
     filename <- args[1]
     data <- read.csv(filename)
     ci(data$Height)    # Specify which column to operate on
+
+Testing
+-------
+
+Even though I've left it until the end, testing is an important part of
+software development. Just as you wouldn't trust an architect who builds
+bridges but doesn't test ahead of time whether the design and the materials
+used will hold up the bridge, you shouldn't trust a software engineer
+who doesn't test his code. You have no way to know whether it works properly.
+
+Testing is also useful to you. As your code evolves and you change parts
+of your program to add more features, you want to make sure that those changes
+haven't broken other parts of your code. Automatic testing is ideal for this.
+
+The simplest way to test your code is to use it on various inputs
+and make sure the results are what you expect. For example, let's say you wrote
+the standard error function as
+
+    se <- function(x) { sd(x) / length(x) }
+
+Is there something wrong with this function? Let's say we didn't notice.
+We can do a simple test:
+
+    x <- 1:10
+    sd(x) / sqrt(length(x))    # Expected value (eqn for the standard error)
+    se(x)                      # Actual results
+
+The values don't match, so there must be something wrong with our function.
+
+There's a more automated way of running tests, which is handy when you have
+lots of functions that you're testing. Write an R script with the above (se)
+function.
+
+Next, we'll write a function that will test the function se:
+
+    test.se <- function() {
+        x <- 1:10
+        checkEquals(sd(x) / sqrt(length(x)), se(x))
+    }
+
+Now, go to an R command-line and run all tests in the file (only one here):
+
+    install.package("RUnit")    # Needed if RUnit is not present
+    library(RUnit)
+    runTestFile('se.R')
+
+Notice the summary in the end: it says there was one failure.
+
+**Exercise.** Fix the error and run the test again.
+
+We only have one test, but `runTestFile` would have automatically run all
+functions that started with the word `test`.
