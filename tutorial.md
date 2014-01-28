@@ -184,8 +184,8 @@ We can also create a data frame on the fly:
 
     data <- data.frame(Turbidity=rnorm(10), Concentration=rnorm(10))
 
-Reading data
-------------
+Reading and writing data
+------------------------
 
 Usually, your data will be in the form of a table in a file. It could be an
 Excel file, which you'll need to export as a CSV file.
@@ -196,6 +196,10 @@ Excel file, which you'll need to export as a CSV file.
 To read this file in R as a data frame:
 
     data <- read.csv('height.csv')
+
+You may also write a data frame as a CSV file in your current directory:
+
+    write.csv(data, 'data.csv')
 
 Data manipulation
 -----------------
