@@ -20,7 +20,8 @@ Basic operations are `+`, `-`, `*`, `/`, and `^`. For example,
 
     y <- x^2    # Replaces old value of y
 
-**Exercise.*** Write R code to generate the first 100 odd numbers.
+**Exercise.** Write R code to generate the first 100 odd numbers.
+**Solution.** 2 * 1:100 - 1
 
 Functions in R are similar to mathematical functions. A function applies
 an operation to its parameters, if any, and returns a new value.
