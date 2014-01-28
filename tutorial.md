@@ -217,7 +217,7 @@ but the original data frame remains intact:
 **Exercise.** Add an Age column to the trees dataset, where the Age
 is some function of the Girth. Use our jitter function to randomize a bit.
 
-**Solution.** trees$Age = jitter(trees$Girth * 10)
+**Solution.** `trees$Age = jitter(trees$Girth * 10)`
 
 Linear regression and ANOVA
 ---------------------------
