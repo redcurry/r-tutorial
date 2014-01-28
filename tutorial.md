@@ -88,6 +88,35 @@ Or specific quantiles, like the 2.5% and 97.5% quantiles:
 Other useful functions you can use are `sum`, `mean`, `median`, `var`,
 `min`, and `max`.
 
+User-defined functions
+----------------------
+
+You can create your own functions in R. Writing functions is a nice way to
+modularize your code so that the same function can be called more than once
+and you don't have to keep writing the same piece of code over and over.
+Top me, code duplication is the greatest evil in software development.
+This is because duplicated code is difficult to maintain---if you make a change
+in one piece, you have to find all the others to make the same change.
+With a function, you make the chance once, and everyone who calls the function
+automatically gets the change.
+
+To write a function in R:
+
+    stddev <- function(x) { sqrt(var(x)) }
+
+Functions could span multiple lines if necessary, but the function returns
+the value of the last statement. We'll practice creating functions in the
+exercises.
+
+**Exercise.** Write a function `se` to calculate the stdardard error of x.
+
+**Solution.** `se <- function(x) { sd(x) / sqrt(length(x)) }`
+
+As mentioned, functions may have several parameters, some of which may be
+optional. For example:
+
+    jitter <- function(x, amount=1) { x + rnorm(length(x), mean=0, sd=amount) }
+
 Sampling
 --------
 
@@ -107,7 +136,57 @@ as an element of a vector, use `replicate`:
 
     replicate(10, mean(sample(x, replace=T)))
 
-**Exercise.** Compute the 95% bootstrap confidence interval of the mean for `x`.
+**Exercise.** Write a function that computes the 95% bootstrap
+confidence interval of the mean for `x`.
 
-**Solution.** `quantile(replicate(10000, mean(sample(x, replace=T))),`
-`prob=c(0.025, 0.975))`
+**Solution.**
+`ci <- function(x) { quantile(replicate(10000, mean(sample(x, replace=T))), prob=c(0.025, 0.975)) }`
+
+Data frame
+----------
+
+We've been working with vectors so far, but another important data structure
+in R is the data frame. A data frame is like a table, with rows and columns,
+and the columns are often named.
+
+R comes with many built-in data sets, which often come as data frames.
+See the built-in data sets:
+
+    data()
+
+Let's look at the data frame `trees`:
+
+    trees
+
+*Explain structure.*
+
+We can access each column as a vector by specifying the header name after
+the data frame variable name:
+
+    trees$Girth
+
+We can also access each row as a one-row data frame using bracket notation:
+
+    trees[1,]    # First number is the row, empty columns means grab all
+
+Instead of giving it a row index, we can also specify a conditional expression:
+
+    trees[trees$Height > 75,]
+
+**Exercise.** Write a function to calculate the mean Volume of x,
+a data frame that conforms to `trees`, with a Girth less than `max_girth`.
+
+**Solution.** `vol <- function(x, max_girth) { mean(x[x$Girth < max_girth,]$Volume) }`
+
+Reading data
+------------
+
+Usually, your data will be in the form of a table in a file. It could be an
+Excel file, which you'll need to export as a CSV file.
+
+**Exercise.** Create a CSV file with headers `Age` (in years) and `Height`
+(in inches) and fill it up with some made-up data. Call the file `height.csv`.
+
+To read this file in R as a data frame:
+
+    data <- read.csv('height.csv')
