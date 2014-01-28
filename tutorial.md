@@ -251,3 +251,20 @@ To plot the best-fit line:
     intercept <- coef(lmodel)[1]
     slope <- coef(lmodel)[2]
     abline(intercept, slope)
+
+Rscript
+-------
+
+Suppose you want to calculate the 95% bootstrap confidence interval of the mean
+on several data files. One way to do it is to write an R script that you can
+then call from the command line for each of your data files, perhaps as a loop.
+
+    ci <- function(x) {
+        quantile(replicate(10000, mean(sample(x, replace=T))),
+            prob=c(0.025, 0.975))
+    }
+
+    args <- commandArgs(T)
+    filename <- args[1]
+    data <- read.csv(filename)
+    ci(data$Height)    # Specify which column to operate on
