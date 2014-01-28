@@ -12,6 +12,8 @@ An easier way to generate a sequence of numbers is
 
     x <- 1:10
 
+All elements of a vector must have the same type.
+
 Operations
 ----------
 
@@ -190,3 +192,54 @@ Excel file, which you'll need to export as a CSV file.
 To read this file in R as a data frame:
 
     data <- read.csv('height.csv')
+
+Data manipulation
+-----------------
+
+You can add a new column to a data frame on the fly like this:
+
+    data$Weight <- data$Height * 2
+
+Or you can obtain a new data frame with the column added to it,
+but the original data frame remains intact:
+
+    income <- data$Age * 20000
+    newdata <- cbind(data, income)
+
+**Exercise.** Add an Age column to the trees dataset, where the Age
+is some function of the Girth. Use our jitter function to randomize a bit.
+
+**Solution.** trees$Age = jitter(trees$Girth * 10)
+
+Linear regression and ANOVA
+---------------------------
+
+R is a very powerful statistical language with hundreds of tools that allow you
+to perform any statistical test ever conceived. I'm just going to show you
+the very simple linear regression and basic ANOVA.
+
+Let's look at the relationship between Girth and Height in `trees`.
+
+    plot(trees$Girth, trees$Height)
+
+The plot function plots a scatter plot where the first parameter (Girth)
+is in the x-axis and the second (Height) is in the y-axis. The plot function
+has many other parameters to customize how the plot is displayed.
+
+Let's test if this relationship is significant. First, run a linear regression
+function, which will return a model that we can then analyze:
+
+    lmodel <- lm(trees$Height ~ trees$Girth)
+
+If you print out the lmodel by itself, it shows the intercept and slope,
+but it doesn't tell you whether it's significant. Run an anova on the model:
+
+    anova(lmodel)
+
+The `coef` function also shows you the intercept and slope.
+
+To plot the best-fit line:
+
+    intercept <- coef(lmodel)[1]
+    slope <- coef(lmodel)[2]
+    abline(intercept, slope)
